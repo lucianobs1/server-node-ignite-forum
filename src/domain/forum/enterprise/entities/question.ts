@@ -21,6 +21,9 @@ export class Question extends Entity<QuestionProps> {
   get title() {
     return this.props.title;
   }
+  get content() {
+    return this.props.content;
+  }
   get slug() {
     return this.props.slug;
   }
@@ -42,24 +45,24 @@ export class Question extends Entity<QuestionProps> {
     return this.content.substring(0, 120).trimEnd().concat('...');
   }
 
+  private touch() {
+    this.props.updatedAt = new Date();
+  }
+
   set content(content: string) {
-    this.content = content;
+    this.props.content = content;
     this.touch();
   }
 
   set title(title: string) {
-    this.title = title;
+    this.props.title = title;
     this.props.slug = Slug.createFromText(title);
     this.touch();
   }
 
   set bestAnswerId(bestAnswerId: UniqueEntityId | undefined) {
-    this.bestAnswerId = bestAnswerId;
+    this.props.bestAnswerId = bestAnswerId;
     this.touch();
-  }
-
-  private touch() {
-    this.props.updatedAt = new Date();
   }
 
   static create(
